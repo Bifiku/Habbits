@@ -17,7 +17,7 @@ const page = {
         daysContainer: document.querySelector('#days'),
         nextDay: document.querySelector('.habbit__day'),
     }
-}
+};
 
 // utils
 
@@ -36,13 +36,13 @@ function saveData() {
 // render
 function rerenderMenu(activeHabbit) {
     for (const habbit of habbits) {
-        const existed = document.querySelector(`[menu-habbit-id="${habbit.id}"]`)
+        const existed = document.querySelector(`[menu-habbit-id="${habbit.id}"]`);
         if(!existed) {
             const element = document.createElement('button');
             element.setAttribute('menu-habbit-id', habbit.id);
             element.classList.add('menu__item');
             element.addEventListener('click', () => rerender(habbit.id));
-            element.innerHTML = `<img src="./images/${habbit.icon}.svg" alt="${habbit.name}">`
+            element.innerHTML = `<img src="./images/${habbit.icon}.svg" alt="${habbit.name}">`;
             if(activeHabbit.id === habbit.id){
                 element.classList.add('menu__item_active');
             }
@@ -111,7 +111,7 @@ function addDays(event) {
             return {
                 ...habbit,
                 days: habbit.days.concat([{ comment }])
-            }
+            };
         }
         return habbit; 
     })
