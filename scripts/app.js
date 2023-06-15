@@ -16,6 +16,9 @@ const page = {
     content: {
         daysContainer: document.querySelector('#days'),
         nextDay: document.querySelector('.habbit__day'),
+    },
+    popup: {
+        index: document.querySelector('#add-habbit-popup')
     }
 };
 
@@ -33,6 +36,13 @@ function saveData() {
     localStorage.setItem(HABBIT_KEY, JSON.stringify(habbits));
 }
 
+function togglePopup() {
+    if(page.popup.index.classList.contains('cover-hidden')){
+        page.popup.index.classList.remove('cover-hidden');
+    } else {
+        page.popup.index.classList.add('cover-hidden')
+    }
+}
 // render
 function rerenderMenu(activeHabbit) {
     for (const habbit of habbits) {

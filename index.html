@@ -16,7 +16,7 @@
             <img class="logo" src="images/logo.svg" alt="Логотип">
             <div class="menu">
                 <div class="menu__list"></div>
-                <button class="menu__add">
+                <button class="menu__add"  onclick="togglePopup()">
                     <img src="./images/add.svg" alt="Добавить привычку">
                 </button>
             </div>
@@ -45,7 +45,7 @@
                             type="text" 
                             placeholder="Комментарий"
                         >
-                        <button class="button">Готово</button>
+                        <button class="button" type="submit">Готово</button>
                         <img 
                             class="input__icon" 
                             src="./images/comment.svg" 
@@ -54,6 +54,31 @@
                     </form>
                 </div>
             </main>
+        </div>
+        <div class="cover cover-hidden" id="add-habbit-popup">
+            <div class="popup">
+                <h2>Новая привычка</h2>
+                <div class="icon-label">Иконка</div>
+                <div class="icon-select">
+                    <button class="icon icon_active">
+                        <img src="./images/sport.svg" alt="Спорт">
+                    </button>
+                    <button class="icon">
+                        <img src="./images/Water.svg" alt="Напитки">
+                    </button>
+                    <button class="icon">
+                        <img src="./images/food.svg" alt="Еда">
+                    </button>
+                </div>
+                <form class="popup__form">
+                    <input type="text" name="name" placeholder="Название">
+                    <input type="number" name="target" placeholder="Цель">
+                    <button class="button" type="submit">Добавить</button>
+                </form>
+                <button class="popup__close" onclick="togglePopup()">   
+                    <img src="./images/close.svg" alt="Закрыть попап">
+                </button>
+            </div>
         </div>
     </div>
     <script src="./scripts/app.js"></script>
