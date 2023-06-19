@@ -16,7 +16,7 @@
             <img class="logo" src="images/logo.svg" alt="Логотип">
             <div class="menu">
                 <div class="menu__list"></div>
-                <button class="menu__add"  onclick="togglePopup()">
+                <button class="menu__add" onclick="togglePopup()">
                     <img src="./images/add.svg" alt="Добавить привычку">
                 </button>
             </div>
@@ -35,7 +35,9 @@
                 </div>
             </header>
             <main>
-                <div id="days"></div>
+                <div id="days">
+                    
+                </div>
                 <div class="habbit">
                     <div class="habbit__day">День _</div>
                     <form class="habbit__form" onsubmit="addDays(event)">
@@ -70,7 +72,7 @@
                         <img src="./images/food.svg" alt="Еда">
                     </button>
                 </div>
-                <form class="popup__form">
+                <form class="popup__form" onsubmit="addHobbit(event)">
                     <input type="text" name="name" placeholder="Название">
                     <input 
                         type="text" 
