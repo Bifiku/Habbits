@@ -96,15 +96,19 @@ function addDays(event) {
     const habbitForm = event.target;
     const input =  habbitForm.querySelector('input');
     const data = new FormData(habbitForm);
-    if(!data.get('comment')){
+    if (!data.get('comment')) {
         input.classList.add('error');
         return;
     } else {
         input.classList.remove('error');
     }
-    habbits[currentId-1].days.push({
-        comment: data.get('comment')
-    });
+    for(const habbit of habbits) {
+        if(habbit.id === currentId){
+            habbit.days.push({
+                comment: data.get('comment')
+            });
+        }
+    }
     saveData();
     input.value = '';
     rerender(habbits[currentId-1].id);
@@ -114,11 +118,8 @@ function addDays(event) {
 function deleteDays(index) {
     for (const habbit of habbits){
         if(habbit.id === currentId){
-            console.log(habbit);
-            console.log(index);
             habbit.days.splice(index, 1);
-            console.log(habbit.days);
-        };
+        }
         rerender(currentId);
         saveData();
     }
