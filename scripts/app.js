@@ -16,6 +16,9 @@ const page = {
     content: {
         day: document.querySelector('#days'),
         habbitAddDay: document.querySelector('.habbit__day')
+    },
+    popup: {
+        
     }
 }
 
@@ -85,10 +88,14 @@ function rerender(activeHabbitId) {
     if(!activeHabbit){
         return;
     }
+    
     // console.log(activeHabbit);
-    rerenderMenu(activeHabbit);
-    rerenderHead(activeHabbit);
-    rerenderContent(activeHabbit);
+    if(currentId === activeHabbit.id){
+        rerenderMenu(activeHabbit);
+        rerenderHead(activeHabbit);
+        rerenderContent(activeHabbit);
+    }
+    
 }
 
 function addDays(event) {
@@ -111,7 +118,7 @@ function addDays(event) {
     }
     saveData();
     input.value = '';
-    rerender(habbits[currentId-1].id);
+    rerender(currentId);
     
 }
 
