@@ -18,7 +18,8 @@ const page = {
         habbitAddDay: document.querySelector('.habbit__day')
     },
     popup: {
-        
+        windowPopup: document.querySelector('#add-habbit-popup'),
+        iconField: document.querySelector('.popup__form input[name="icon"]')
     }
 }
 
@@ -87,15 +88,12 @@ function rerender(activeHabbitId) {
     const activeHabbit = habbits.find(habbit => habbit.id === activeHabbitId);    
     if(!activeHabbit){
         return;
-    }
-    
-    // console.log(activeHabbit);
+    };
     if(currentId === activeHabbit.id){
         rerenderMenu(activeHabbit);
         rerenderHead(activeHabbit);
         rerenderContent(activeHabbit);
-    }
-    
+    };
 }
 
 function addDays(event) {
@@ -129,9 +127,23 @@ function deleteDays(index) {
         }
         rerender(currentId);
         saveData();
+    }  
+}
+
+function togglePopup() {
+    const popup =  page.popup.windowPopup;
+    if(popup.classList.contains('cover-hidden')){
+        popup.classList.remove('cover-hidden');
+    } else {
+        popup.classList.add('cover-hidden');
     }
-    
-    
+}
+
+function setIcon(context, name){
+    page.popup.iconField.value = name;
+    const activeIcon = document.querySelector('.icon.icon_active');
+    activeIcon.classList.remove('icon_active');
+    context.classList.add('icon_active');
 }
 
 // init
