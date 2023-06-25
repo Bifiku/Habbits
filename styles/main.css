@@ -50,6 +50,7 @@ body {
 }
 
 .menu__item {
+    position: relative;
     background: #FFFFFF;
     box-shadow: 0px 8px 14px rgba(62, 107, 224, 0.12);
     border-radius: 14px;
@@ -65,7 +66,7 @@ body {
     filter: brightness(0) invert(1);
 }
 .menu__item:hover {
-    background-color: #6A6AFB
+    background-color: #6A6AFB;
 }
 .menu__item:hover img{
     filter: brightness(0) invert(1);
@@ -298,6 +299,18 @@ h2 {
 }
 .icon:hover img{
     filter: brightness(0) invert(1);
+}
+
+.icon-close {
+    position: absolute;
+    scale: .5;
+    top: -15px;
+    right: -15px;
+    display: none;
+}
+
+.icon-close_active {
+    display: block
 }
 
 .icon_active {
