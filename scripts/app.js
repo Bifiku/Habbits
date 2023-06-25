@@ -1,6 +1,24 @@
 'use strict';
 
-let habbits = [];
+let habbits = [
+    {
+        "id": 1,
+        "icon": "sport",
+        "name": "Отжимания",
+        "target": 10,
+        "days": [
+            { "comment": "Первый подход всегда дается тяжело" },
+            { "comment": "Второй день уже проще" }
+        ]
+    },
+    {
+        "id": 2,
+        "icon": "food",
+        "name": "Правильное питание",
+        "target": 10,
+        "days": [{ "comment": "Круто!" }]
+    }
+];
 let HABBIT_KEY = 'HABBIT_KEY';
 let currentId;
 
@@ -23,6 +41,10 @@ const page = {
     }
 }
 
+//Load in localStorage
+
+// utils
+
 function loadData() {
     const habbitsString = localStorage.getItem(HABBIT_KEY);
     const habbitArray = JSON.parse(habbitsString);
@@ -33,6 +55,37 @@ function loadData() {
 
 function saveData() {
     localStorage.setItem(HABBIT_KEY, JSON.stringify(habbits)); 
+}
+
+function resetForm(form, fields) {
+    for (const field of fields){
+        form[field].value = '';
+    }
+
+}
+
+function validateAndGetFormData(form, fields) {
+    const formData = new FormData(form);
+    const res = {};
+    for (const field of fields) {
+        const fieldValue = formData.get(field);
+        form[field].classList.remove('error');
+        if (!fieldValue){
+            form[field].classList.add('error');
+            return;
+        }
+        res[field] = fieldValue;
+    }
+    let isValid = true;
+    for (const field of fields) {
+        if(!res[field]){
+            isValid = false;
+        }        
+    }
+    if(!isValid) {
+        return;
+    }
+    return res; 
 }
 
 // render
@@ -68,19 +121,19 @@ function rerenderHead(activeHabbitId) {
 
 function rerenderContent(activeHabbitId) {
     page.content.day.innerHTML = '';
-    for(let i = 0; i < activeHabbitId.days.length; i++){
+    for (const index in activeHabbitId.days) {
         const element = document.createElement('div');
         element.classList.add('habbit');
         element.innerHTML = `
-            <div class="habbit__day">День ${i+1}</div>
-            <div class="habbit__comment">${activeHabbitId.days[i].comment}</div>
-            <button class="habbit__delete" onclick="deleteDays(${i})">
+            <div class="habbit__day">День ${Number(index) + 1}</div>
+            <div class="habbit__comment">${activeHabbitId.days[index].comment}</div>
+            <button class="habbit__delete" onclick="deleteDays(${index})">
                 <img src="./images/delete.svg" alt="Удалить день 1">
             </button>
         `;
         page.content.day.appendChild(element);
-        page.content.habbitAddDay.innerHTML = `День ${activeHabbitId.days.length+1}`
     }
+    page.content.habbitAddDay.innerHTML = `День ${activeHabbitId.days.length+1}`;
 }
 
 function rerender(activeHabbitId) {
@@ -94,14 +147,17 @@ function rerender(activeHabbitId) {
         rerenderHead(activeHabbit);
         rerenderContent(activeHabbit);
     };
+    
+    document.location.replace(document.location.pathname + "#" + activeHabbitId);
 }
 
 function addDays(event) {
     event.preventDefault();
     const habbitForm = event.target;
     const input =  habbitForm.querySelector('input');
-    const data = new FormData(habbitForm);
-    if (!data.get('comment')) {
+    // const data = new FormData(habbitForm);
+    const data = validateAndGetFormData(habbitForm, ['comment']);
+    if (!data) {
         input.classList.add('error');
         return;
     } else {
@@ -110,12 +166,12 @@ function addDays(event) {
     for(const habbit of habbits) {
         if(habbit.id === currentId){
             habbit.days.push({
-                comment: data.get('comment')
+                comment: data.comment
             });
         }
     }
     saveData();
-    input.value = '';
+    resetForm(event.target, ['comment'])
     rerender(currentId);
     
 }
@@ -146,8 +202,35 @@ function setIcon(context, name){
     context.classList.add('icon_active');
 }
 
+function addHobbit(event) {
+    event.preventDefault();
+    // const data = new FormData(event.target);
+    const data = validateAndGetFormData(event.target, ['name', 'icon', 'target']);
+    const obj = {
+        id: habbits.length+1,
+        icon: page.popup.iconField.value,
+        name: data.name,
+        target: data.target,
+        days: []
+    }
+    habbits.push(obj);
+    resetForm(event.target, ['name', 'target']);
+    togglePopup();
+    saveData();
+    rerender(currentId);
+}
+
 // init
 (() => {
     loadData();
-    rerender(habbits[0].id);
+    
+    const hashId = Number(document.location.hash.replace('#', ''));
+    const urlHabbit = habbits.find(habbit => habbit.id == hashId);
+    if(habbits.length > 0){
+        if(urlHabbit){
+            rerender(urlHabbit.id);
+        } else {
+            rerender(habbits[0].id);
+        }
+    }
 })();

@@ -72,7 +72,8 @@ body {
 }
 
 .content {
-    min-width: 900px;
+    max-width: 900px;
+    width: 100%;
     padding: 45px;
     align-items: center;
 }
@@ -316,4 +317,8 @@ h2 {
 
 .popup__form input {
     width: 100%;
+}
+
+@media (max-width: 767px) {
+    
 }
